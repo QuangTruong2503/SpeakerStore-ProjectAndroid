@@ -342,5 +342,11 @@ public class MainActivity extends AppCompatActivity {
         // Close the database when the activity is destroyed
         dbHelper.close();
     }
+    protected void onResume() {
+        super.onResume();
+        // Cập nhật dữ liệu trong adapter
+        productAdapter.clearData(); // Cập nhật dữ liệu adapter (hoặc load lại dữ liệu từ database)
+        loadProductsFromDatabase();
+    }
 
 }
