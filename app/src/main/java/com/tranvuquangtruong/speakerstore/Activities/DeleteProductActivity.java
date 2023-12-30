@@ -32,9 +32,8 @@ import java.util.List;
 public class DeleteProductActivity extends AppCompatActivity {
 
     private static final int INTERVAL_MILLIS = 5000; // Thời gian giữa các lần lặp, 5000 milliseconds = 5 seconds
-    private Handler handler;
     private GridView gridView;
-    private Button btnDeleteProduct;
+
     private List<ProductModel> productModelList;
     private DBHelper dbHelper;
     private ProductListViewAdapter productAdapter;
@@ -167,11 +166,10 @@ public class DeleteProductActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.sort_price_menu, menu);
     }
 
-    private void loadProductsFromDatabase() {
+    private void loadProductsFromDatabase( ) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = {DBHelper.COLUMN_ID, DBHelper.COLUMN_NAME, DBHelper.COLUMN_PRICE,
-                DBHelper.COLUMN_QUANTITY, DBHelper.COLUMN_IMAGE, DBHelper.COLUMN_BRAND};
-        Cursor cursor = db.query(DBHelper.TABLE_PRODUCTS, columns, null, null, null, null, null);
+        String query = "SELECT * FROM " + DBHelper.TABLE_PRODUCTS;
+        Cursor cursor = db.rawQuery(query,null);
 
         if (cursor != null) {
             int columnIndexId = cursor.getColumnIndex(DBHelper.COLUMN_ID);
@@ -194,7 +192,7 @@ public class DeleteProductActivity extends AppCompatActivity {
                         byte[] image = cursor.getBlob(columnIndexImage);
                         String brand = cursor.getString(columnIndexBrand);
 
-                        ProductModel product = new ProductModel(id,name, price, quantity, image, brand);
+                        ProductModel product = new ProductModel(id,name, price, quantity, image,brand);
                         productModelList.add(product);
                     }
                 } while (cursor.moveToNext());
