@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Cửa Hàng Loa Vinh Kiệt</string>
+    <string name="tvTieuDeMain">CỬA HÀNG LOA VINH KIỆT</string>
+    <string name="nhap_du_lieu">Trang nhập dữ liệu</string>
+    <string name="open">Open Menu</string>
+    <string name="close">Close Menu</string>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
+</resources>
