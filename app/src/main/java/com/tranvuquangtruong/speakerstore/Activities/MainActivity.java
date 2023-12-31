@@ -2,7 +2,9 @@ package com.tranvuquangtruong.speakerstore.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.appcompat.widget.Toolbar;
 
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private ActivityResultLauncher<Intent> addProductLauncher;
     private  ActivityResultLauncher<Intent> deleteProductLauncher;
-    private static boolean isNewActivityOpened = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText("Sắp xếp sản phẩm");//refresh giá trị textview
             }
         });
-        
+        FloatingActionButton  btnAdd = findViewById(R.id.btnAddMain);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,AddProductActivity.class);
+                addProductLauncher.launch(intent);
+            }
+        });
 
         // Load dữ liệu từ SQLite và cập nhật GridView
         loadProductsFromDatabase();
@@ -114,12 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
         });
 
-        // Kiểm tra trạng thái của trang mới được mở
-        if (isNewActivityOpened) {
-            // Trang mới được mở
-        } else {
-            // Trang mới chưa được mở
-        }
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -159,13 +163,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Xử lý sự kiện khi một mục menu được chọn
         if (item.getItemId()==R.id.menu_add){
-            isNewActivityOpened = true;
             // Open AddProductActivity using the new launcher
             Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
             addProductLauncher.launch(intent);
         }
         else if (item.getItemId() == R.id.menu_delete) {
-            isNewActivityOpened = true;
             Intent intent = new Intent(MainActivity.this , DeleteProductActivity.class);
             deleteProductLauncher.launch(intent);
         } else if (item.getItemId() == android.R.id.home) {

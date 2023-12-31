@@ -26,12 +26,11 @@
     <GridView
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
-        android:layout_height="630dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="570dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:horizontalSpacing="3dp"
         android:numColumns="2"
-        android:paddingTop="5dp"
         android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,6 +102,18 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/background1" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
+        android:clickable="true"
+        app:backgroundTint="#F4F0F0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_add_circle_outline_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
