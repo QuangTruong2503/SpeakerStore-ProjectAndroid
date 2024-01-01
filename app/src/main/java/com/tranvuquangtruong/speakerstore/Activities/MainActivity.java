@@ -167,12 +167,18 @@ public class MainActivity extends AppCompatActivity {
         byte[] imageData1 = convertDrawableToByteArray(this,R.drawable.jbl1);
         byte[] imageData2 = convertDrawableToByteArray(this,R.drawable.sony1);
         byte[] imageData3 = convertDrawableToByteArray(this,R.drawable.samsung1);
+        byte[] imageData4 = convertDrawableToByteArray(this,R.drawable.samsung2);
+        byte[] imageData5 = convertDrawableToByteArray(this,R.drawable.sony2);
         dbHelper.insertData(1,"Loa Bluetooth JBL Partybox 710",2000000,
                 5, imageData1,"JBL");
         dbHelper.insertData(2,"Loa Bluetooth Sony SRS-XP500 ",5000000,
-                5, imageData2,"Sony");
+                11, imageData2,"Sony");
         dbHelper.insertData(3,"Loa Tháp Samsung MX-T40/XV ",6500000,
-                5, imageData3,"SamSung");
+                3, imageData3,"SamSung");
+        dbHelper.insertData(4,"Loa tháp Samsung MX-ST50B 230W",3500000,
+                8, imageData4,"SamSung");
+        dbHelper.insertData(5,"Loa Bluetooth Sony Hifi GTK-PG10",12500000,
+                12, imageData5,"Sony");
     }
     // Chuyển đổi ảnh từ tài nguyên Drawable sang mảng byte[]
     public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
