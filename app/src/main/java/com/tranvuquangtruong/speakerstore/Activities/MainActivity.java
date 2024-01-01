@@ -9,9 +9,12 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.view.MenuInflater;
@@ -30,6 +33,7 @@ import com.tranvuquangtruong.speakerstore.Adapters.ProductAdapter;
 import com.tranvuquangtruong.speakerstore.Models.ProductModel;
 import com.tranvuquangtruong.speakerstore.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Load dữ liệu từ SQLite và cập nhật GridView
         loadProductsFromDatabase();
-
+        // Thêm dữ liệu săn vào database
+        addProductToDatabase();
         LinearLayout menuSortPrice = findViewById(R.id.layoutMenuSortPriceMain);
         TextView tvSortProduct = findViewById(R.id.tvBrandMain);
         menuSortPrice.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +158,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void addProductToDatabase() {
+        byte[] imageData1 = convertDrawableToByteArray(this,R.drawable.jbl1);
+        dbHelper.insertData(1,"JBL",2000000,5, imageData1,"JBL");
+    }
+    // Chuyển đổi ảnh từ tài nguyên Drawable sang mảng byte[]
+    public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableId);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.main_menu, menu);
@@ -179,8 +196,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadProductsFromDatabase( ) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = {DBHelper.COLUMN_ID, DBHelper.COLUMN_NAME, DBHelper.COLUMN_PRICE, DBHelper.COLUMN_QUANTITY, DBHelper.COLUMN_IMAGE,DBHelper.COLUMN_BRAND};
-        Cursor cursor = db.query(DBHelper.TABLE_PRODUCTS, columns, null, null, null, null, null);
+        String query = "SELECT * FROM " + DBHelper.TABLE_PRODUCTS;
+        Cursor cursor = db.rawQuery(query,null);
 
         if (cursor != null) {
             int columnIndexId = cursor.getColumnIndex(DBHelper.COLUMN_ID);

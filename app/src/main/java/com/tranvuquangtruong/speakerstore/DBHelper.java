@@ -3,10 +3,15 @@ package com.tranvuquangtruong.speakerstore;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.tranvuquangtruong.speakerstore.Models.ProductModel;
+
+import java.io.ByteArrayOutputStream;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "product_db";
@@ -26,9 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_NAME + " TEXT," +
                     COLUMN_PRICE + " REAL," +
                     COLUMN_QUANTITY + " INTEGER," +
-                    COLUMN_IMAGE + " BLOB" +
-                    COLUMN_BRAND + "TEXT" +
-                    ")";
+                    COLUMN_IMAGE + " BLOB," +
+                    COLUMN_BRAND + " TEXT" +");";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,6 +79,24 @@ public class DBHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+    public void insertData(int productId, String productName, double productPrice,
+                           int productQuantity, byte[] productImage, String productBrand) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, productName);
+        values.put(COLUMN_PRICE, productPrice);
+        values.put(COLUMN_QUANTITY, productQuantity);
+        values.put(COLUMN_IMAGE, productImage);
+        values.put(COLUMN_BRAND,productBrand);
+
+        try {
+            db.insertOrThrow(TABLE_PRODUCTS, null, values);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+    }
     // Phương thức lấy thông tin sản phẩm theo ID
     public ProductModel getProductById(int productId) {
         SQLiteDatabase db = this.getReadableDatabase();
