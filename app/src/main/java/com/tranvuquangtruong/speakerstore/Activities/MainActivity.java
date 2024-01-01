@@ -80,8 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Load dữ liệu từ SQLite và cập nhật GridView
         loadProductsFromDatabase();
-        // Thêm dữ liệu săn vào database
-        addProductToDatabase();
+        // kiểm tra database trống
+        if (dbHelper.isDatabaseEmpty())
+        {
+            // Thêm dữ liệu săn vào database
+            addProductToDatabase();
+        }
+
         LinearLayout menuSortPrice = findViewById(R.id.layoutMenuSortPriceMain);
         TextView tvSortProduct = findViewById(R.id.tvBrandMain);
         menuSortPrice.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +165,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void addProductToDatabase() {
         byte[] imageData1 = convertDrawableToByteArray(this,R.drawable.jbl1);
-        dbHelper.insertData(1,"JBL",2000000,5, imageData1,"JBL");
+        byte[] imageData2 = convertDrawableToByteArray(this,R.drawable.sony1);
+        byte[] imageData3 = convertDrawableToByteArray(this,R.drawable.samsung1);
+        dbHelper.insertData(1,"Loa Bluetooth JBL Partybox 710",2000000,
+                5, imageData1,"JBL");
+        dbHelper.insertData(2,"Loa Bluetooth Sony SRS-XP500 ",5000000,
+                5, imageData2,"Sony");
+        dbHelper.insertData(3,"Loa Tháp Samsung MX-T40/XV ",6500000,
+                5, imageData3,"SamSung");
     }
     // Chuyển đổi ảnh từ tài nguyên Drawable sang mảng byte[]
     public static byte[] convertDrawableToByteArray(Context context, int drawableId) {

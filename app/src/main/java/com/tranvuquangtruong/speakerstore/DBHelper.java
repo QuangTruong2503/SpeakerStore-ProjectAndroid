@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import com.tranvuquangtruong.speakerstore.Models.ProductModel;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.annotation.Target;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "product_db";
@@ -97,6 +98,16 @@ public class DBHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public boolean isDatabaseEmpty() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PRODUCTS, null);
+
+        boolean isEmpty = cursor.getCount() == 0;
+
+        cursor.close();
+        return isEmpty;
+    }
+
     // Phương thức lấy thông tin sản phẩm theo ID
     public ProductModel getProductById(int productId) {
         SQLiteDatabase db = this.getReadableDatabase();
