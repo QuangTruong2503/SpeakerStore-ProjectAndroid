@@ -179,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
                 8, imageData4,"SamSung");
         dbHelper.insertData(5,"Loa Bluetooth Sony Hifi GTK-PG10",12500000,
                 12, imageData5,"Sony");
+        dbHelper.insertData(6,"Loa Bluetooth Sony Hifi GTK-PG10",12500000,
+                12, imageData5,"Sony");
     }
     // Chuyển đổi ảnh từ tài nguyên Drawable sang mảng byte[]
     public static byte[] convertDrawableToByteArray(Context context, int drawableId) {
